@@ -14,30 +14,30 @@ export class ProductService
   getAllProdcuts():Observable<Product[]>
   {
     return this.http.get<Product[]>
-    //(this.url + '/GetAllAProdcucts');
+    
     (this.url);
   }
   getProductById(id:string):Observable<Product>
   {
-    //return this.http.get<Product>(this.url + '/GetEmployeeById/'+id);
+    
     return this.http.get<Product>(this.url + '/'+id);
   }
   CreateProduct(product:Product):Observable<Product>
   {
     const httpOptions = {headers:new HttpHeaders({'ContentType' : 'application/json'})};
-    //return this.http.post<Product>(this.url + '/CreateProduct/',product,httpOptions);
+    
     return this.http.post<Product>(this.url,product,httpOptions);
   }
   UpdateProduct(product:Product):Observable<Product>
   {
     const httpOptions = {headers:new HttpHeaders({'ContentType':'application/json'})};
-    //return this.http.put<Product>(this.url + '/UpdateProduct/',product,httpOptions);
+    
     return this.http.put<Product>(this.url ,product,httpOptions);
   }
   DeleteProduct(id:string):Observable<number>
   {
     const httpOptions = {headers: new HttpHeaders({'ContentType':'application/json'})};
-    //return this.http.delete<number>(this.url + '/DeleteProduct?id=' + id,httpOptions);
+    
     return this.http.delete<number>(this.url + '?id=' + id,httpOptions);
   }
 }
