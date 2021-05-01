@@ -1,114 +1,195 @@
-<div class="container">  
-  
-  <mat-card>  
-    <mat-toolbar color="accent">  
-      <div align="center" style="color:white;text-align: right;">  
-        CRUD operation in Angular 7 using Web api and Sql Database  
-      </div>    
-    </mat-toolbar>  
-  <br><br>  
-    <mat-card-content>  
-      <form [formGroup]="employeeForm"(ngSubmit)="onFormSubmit(employeeForm.value)">  
-              <table>  
-                <tr>  
-                  <td class="tbl1">  
-                    <mat-form-field class="demo-full-width">  
-                      <input formControlName="EmpName" matTooltip="Enter Employee Name" matInput placeholder="Employee Name">  
-                    </mat-form-field>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('EmpName').value && employeeForm.get('EmpName').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                  <td class="tbl1">  
-                    <mat-form-field class="demo-full-width">  
-                      <input matInput [matDatepicker]="picker"matTooltip="Enter Date Of Birth" formControlName="DateOfBirth"placeholder="Choose Date Of Birth">  
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>  
-                      <mat-datepicker #picker></mat-datepicker>  
-                    </mat-form-field>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('DateOfBirth').value && employeeForm.get('DateOfBirth').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                  <td class="tbl1">  
-                    <mat-form-field class="demo-full-width">  
-                      <input formControlName="EmailId" matTooltip="Enter EmailId" matInput placeholder="EmailId">  
-                    </mat-form-field>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('EmailId').value && employeeForm.get('EmailId').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                </tr>  
-                <tr>  
-                  <td class="tbl1">  
-                    <span>Gender</span>  
-                    <br><br>  
-                    <mat-radio-group matTooltip="Enter Gender"formControlName="Gender">  
-                        <mat-radio-button value="0">Male</mat-radio-button>    
-                        <mat-radio-button value="1">Female</mat-radio-button>  
-                      </mat-radio-group>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('Gender').value && employeeForm.get('Gender').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                  <td class="tbl1">  
-                    <mat-form-field class="demo-full-width">  
-                      <input matTooltip="Enter Address"formControlName="Address" matInput placeholder="Address">  
-                    </mat-form-field>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('Address').value && employeeForm.get('Address').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                  <td class="tbl1">  
-                    <mat-form-field class="demo-full-width">  
-                      <input formControlName="PinCode" matTooltip="Enter Pine Code" matInput placeholder="PinCode">  
-                    </mat-form-field>  
-                    <mat-error>  
-                      <span *ngIf="!employeeForm.get('PinCode').value && employeeForm.get('PinCode').touched"></span>  
-                    </mat-error>  
-                  </td>  
-                </tr>  
-                <tr>  
-                  <td></td>  
-                  <td  class="content-center">  
-                    <button type="submit" mat-raised-button color="accent"matTooltip="Click Submit Button"[disabled]="!employeeForm.valid">Submit</button>      
-                    <button type="reset" mat-raised-button color="accent"matTooltip="Click Reset Button" (click)="resetForm()">Reset</button>  
-                  </td>  
-                  <td>  
-                    <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">  
-                      {{massage}}  
-                    </p>  
-                  </td>  
-                </tr>  
-              </table>  
-  <br><br>  
-        <table class="table" >  
-            <tr ngclass="btn-primary">  
-              <th class="tbl2">Employee Name</th>  
-              <th class="tbl2">Date Of Birth</th>  
-              <th class="tbl2">Email Id</th>  
-              <th class="tbl2">Gender</th>  
-              <th class="tbl2">Address</th>  
-              <th class="tbl2">Pine Code</th>  
-              <th class="tbl2">Edit</th>  
-              <th class="tbl2">Delete</th>  
-            </tr>  
-            <tr *ngFor="let employee of allEmployees | async">  
-              <td class="tbl2">{{employee.EmpName}}</td>  
-              <td class="tbl2">{{employee.DateOfBirth | date }}</td>  
-              <td class="tbl2">{{employee.EmailId}}</td>  
-              <td class="tbl2">{{employee.Gender ==0? 'Male' : 'Female'}}</td>  
-              <td class="tbl2">{{employee.Address}}</td>  
-              <td class="tbl2">{{employee.PinCode}}</td>  
-              <td class="tbl2">  
-                <button type="button" class="btn btn-info"matTooltip="Click Edit Button"(click)="loadEmployeeToEdit(employee.EmpId)">Edit</button>  
-              </td>  
-              <td class="tbl2">  
-                <button type="button" class="btn btn-danger"matTooltip="Click Delete Button"(click)="deleteEmployee(employee.EmpId)">Delete</button>  
-              </td>  
-            </tr>  
-    
-          </table>  
-      </form>  
-    </mat-card-content>  
-  </mat-card>  
-  </div>  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript' src='jQueryFileExplorer.js'></script>
+<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.2/split.min.js'></script>
+<link rel='stylesheet' href='jQueryFileExplorer.css' type='text/css'/>
+<style>
+	html,* { font-family: 'Inter'; box-sizing: border-box; }
+body { background-color: #fafafa; line-height:1.6;}
+.lead { font-size: 1.5rem; font-weight: 300; }
+.container { margin: 150px auto; max-width: 960px; }
+	</style>
+<script>
+$(function(){
+	$("#fileexplorer1").jQueryFileExplorer({
+		root: "/",
+		rootLabel:"Server",
+		script: getPath,
+		fileScript: function(file){window.open("https://localhost:44316/FileExplorer/GetPath?path="+file.path);}
+	});
+
+});
+
+function getPath(data)
+{
+	if(data.path=='/')
+	{
+		return [
+			{
+				label: 'C:',
+				path: 'C:',
+				isDrive: true,
+				isFolder: true,
+				hasSubfolder: true,
+				subitems:['Total: 300,000', 'Free: 100,000']
+			},
+			{
+				label: 'D:',
+				path: 'D:',
+				isDrive: true,
+				isFolder: true,
+				hasSubfolder: true,
+				subitems:['Total: 100,000', 'Free: 80,000']
+			}
+		];
+	}
+	else if(data.path=='C:')
+	{
+		return [
+			{
+				label: 'Windows',
+				path: 'C:/Windows',
+				hasSubfolder: true,
+				isFolder: true,
+				subitems:['1/2/2021']
+			},
+			{
+				label: 'Temp',
+				path: 'C:/Temp',
+				hasSubfolder: true,
+				isFolder: true,
+				lastModified: '1/1/2021'
+			},
+			{
+				label: 'FolderWithoutSubfolder',
+				path: 'C:/FolderWithoutSubfolder',
+				hasSubfolder: false,
+				isFolder: true,
+				subitems: ['1/3/2021']
+			},
+			{
+				label: 'File1',
+				path: 'C:/File1.pdf',
+				isFolder: false,
+				ext: 'pdf',
+				subitems: ['2/2/2021', '123,433']
+			}
+		];
+	}
+	else if(data.path.endsWith("/FolderWithoutSubfolder"))
+	{
+		return [
+			{
+				label: 'file1.pdf',
+				path: data.path+"/file1.pdf",
+				ext: 'pdf',
+				isFolder: false,
+				subitems: ['2/2/2021', '123,234']
+			},
+			{
+				label: 'file2.jpg',
+				path: data.path+"/file2.jpg",
+				ext: 'jpg',
+				isFolder: false,
+				subitems: ['2/2/2021', '123,234']
+			}
+		];
+	}
+	else
+	{
+		return [
+			{
+				label: 'FolderWithSubfolder',
+				path: data.path+"/FolderWithSubfolder",
+				hasSubfolder: true,
+				isFolder: true,
+				subitems: ['1/1/2021']
+			},
+			{
+				label: 'FolderWithoutSubfolder',
+				path: data.path+"/FolderWithoutSubfolder",
+				hasSubfolder: false,
+				isFolder: true,
+				subitems: ['1/1/2021']
+			},
+			{
+				label: 'file1.pdf',
+				path: data.path+"/file1.pdf",
+				ext: 'pdf',
+				isFolder: false,
+				subitems: ['2/2/2021', '123,234']
+			},
+			{
+				label: 'file2.jpg',
+				path: data.path+"/file2.jpg",
+				ext: 'jpg',
+				isFolder: false,
+				subitems: ['2/2/2021','123,234']
+			}
+		];
+	}
+}
+</script>
+</head>
+<html>
+<body><div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="https://www.jqueryscript.net/other/windows-file-explorer-tree.html"></a></li>
+<li><a href="https://www.jqueryscript.net/"></a></li>
+</ul><div id="carbon-block"></div>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+	<div class="container">
+		<h1></h1>
+		<p class="lead"></p>
+<div style='border: 1px solid silver; width: 100%; height: 300px;' id='fileexplorer1'></div>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+try {
+  fetch(new Request("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", { method: 'HEAD', mode: 'no-cors' })).then(function(response) {
+    return true;
+  }).catch(function(e) {
+    var carbonScript = document.createElement("script");
+    carbonScript.src = "//cdn.carbonads.com/carbon.js?serve=CK7DKKQU&placement=wwwjqueryscriptnet";
+    carbonScript.id = "_carbonads_js";
+    document.getElementById("carbon-block").appendChild(carbonScript);
+  });
+} catch (error) {
+  console.log(error);
+}
+</script>
+</body>
+</html>
